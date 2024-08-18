@@ -1,5 +1,11 @@
+import { WouldYouRather } from "./components/WouldYouRather";
+
 function App() {
-  return <div className="bg-[#000000]">sgdgsdgs</div>;
+  return (
+    <>
+      <WouldYouRather />
+    </>
+  );
 }
 
 export default App;

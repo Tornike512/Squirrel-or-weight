@@ -15,3 +15,7 @@
     height: initial;
   }
 }
+
+body {
+  background-color: #795695;
+}

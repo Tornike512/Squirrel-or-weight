@@ -1,0 +1,1 @@
+export { WouldYouRather } from "./WouldYouRather";
