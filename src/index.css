@@ -16,6 +16,12 @@
   }
 }
 
+@font-face {
+  font-family: "cleriong";
+  src: url("/src/fonts/Kelpo\ DEMO.otf");
+}
+
 body {
   background-color: #795695;
+  font-family: "cleriong";
 }
