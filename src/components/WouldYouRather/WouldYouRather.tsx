@@ -1,5 +1,6 @@
 import { UseSendApi } from "src/hooks/UseSendIp";
 import { UseApi } from "src/hooks/UseIP";
+import { submitVote } from "src/hooks/UseVote";
 
 export function WouldYouRather() {
   UseSendApi();
@@ -17,9 +18,9 @@ export function WouldYouRather() {
         <div className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C]">
           Know the mass of everything you look at
         </div>
-        <h2 className="absolute bg-[#533968] px-[15px] py-[6px] text-[32px] rounded-[100%]">
-          OR
-        </h2>
+        <div className="bg-[#533968] py-[6px] px-[15px] absolute rounded-[100%]">
+          <h2 className="text-[32px]">OR</h2>
+        </div>
       </div>
     </div>
   );
