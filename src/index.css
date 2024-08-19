@@ -22,6 +22,11 @@
 }
 
 body {
-  background-color: #795695;
+  background: rgb(82, 110, 162);
+  background: linear-gradient(
+    90deg,
+    rgba(82, 110, 162, 1) 35%,
+    rgba(235, 0, 255, 1) 100%
+  );
   font-family: "cleriong";
 }

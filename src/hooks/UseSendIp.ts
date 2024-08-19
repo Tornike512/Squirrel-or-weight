@@ -7,9 +7,7 @@ export function UseSendApi() {
 
   async function postApi() {
     try {
-      const response = await axios.post(
-        "https://squirrel-weight-backend-j.onrender.com"
-      );
+      const response = await axios.post("https://sq-nine.vercel.app/");
       setApi(JSON.stringify(response.data));
     } catch (error) {
       console.log("Error Loading Api");
@@ -19,8 +17,6 @@ export function UseSendApi() {
   useEffect(() => {
     postApi();
   }, []);
-
-  console.log(api);
 
   return { api };
 }
