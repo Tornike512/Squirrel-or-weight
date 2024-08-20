@@ -11,7 +11,7 @@ export function UseApi() {
     try {
       const response = await axios.get("http://localhost:3000");
       setVotes(response.data);
-      setIpAddress(response.data.ipAddress);
+      setIpAddress(response.data);
     } catch (error) {
       console.log("Error Loading Api");
     }

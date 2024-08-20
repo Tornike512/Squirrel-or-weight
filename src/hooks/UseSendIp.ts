@@ -1,9 +1,11 @@
 import axios from "axios";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { GlobalContext } from "src/GlobalContext";
+import { useContext } from "react";
 
 export function UseSendApi() {
-  const [api, setApi] = useState<string>("");
+  const { api, setApi } = useContext(GlobalContext);
 
   async function postApi() {
     try {

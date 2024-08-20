@@ -6,6 +6,7 @@ export const submitVote = async (color: "green" | "red", ipAddress: any) => {
       color,
       ipAddress,
     });
+
     if (response.status !== 200) {
       throw new Error("Failed to submit vote");
     }

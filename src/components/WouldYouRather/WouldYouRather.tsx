@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UseSendApi } from "src/hooks/UseSendIp";
 import { UseApi } from "src/hooks/UseIP";
 import { submitVote } from "src/hooks/UseVote";
@@ -25,7 +25,16 @@ export function WouldYouRather() {
   const greenPercent = (greens.length * 100) / sum;
   const redPercent = (reds.length * 100) / sum;
 
-  console.log(ipAddress, "Votes!!");
+  useEffect(() => {
+    const mappedAddresses = ipAddress.map((address) => address.ipAddress);
+
+    if (
+      mappedAddresses.length > 0 &&
+      mappedAddresses.includes(mappedAddresses[mappedAddresses.length - 1])
+    ) {
+      setShowVotes(true);
+    }
+  }, [ipAddress]);
 
   return (
     <div className="pt-[5%] px-[10%]">
