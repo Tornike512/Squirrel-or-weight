@@ -25,16 +25,21 @@ export function WouldYouRather() {
   const greenPercent = (greens.length * 100) / sum;
   const redPercent = (reds.length * 100) / sum;
 
-  useEffect(() => {
-    const mappedAddresses = ipAddress.map((address) => address.ipAddress);
+  const lastIp =
+    ipAddress.length > 0
+      ? ipAddress[ipAddress.length - 1]
+      : { ipAddress: "N/A" };
 
+  const mappedAddresses = ipAddress.map((address) => address.ipAddress);
+
+  useEffect(() => {
     if (
       mappedAddresses.length > 0 &&
-      mappedAddresses.includes(mappedAddresses[mappedAddresses.length - 1])
+      mappedAddresses.includes(lastIp.toString())
     ) {
       setShowVotes(true);
     }
-  }, [ipAddress]);
+  }, [lastIp]);
 
   return (
     <div className="pt-[5%] px-[10%]">
@@ -50,23 +55,35 @@ export function WouldYouRather() {
         <ul
           onClick={() => {
             setShowVotes(true);
-            submitVote("red", ipAddress);
+            if (mappedAddresses.includes(lastIp.toString())) {
+              submitVote("red", ipAddress);
+            }
           }}
           className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707]"
         >
-          {!showVotes ? "Control two squirrels" : <li>{redPercent}%</li>}
+          {!showVotes ? (
+            "Control two squirrels"
+          ) : (
+            <li>
+              {collectedVotes.length === 0 ? "0" : redPercent.toFixed(1)}%
+            </li>
+          )}
         </ul>
         <div
           onClick={() => {
             setShowVotes(true);
-            submitVote("green", ipAddress);
+            if (mappedAddresses.includes(lastIp.toString())) {
+              submitVote("green", ipAddress);
+            }
           }}
           className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C]"
         >
           {!showVotes ? (
             "Know the mass of everything you look at"
           ) : (
-            <p className="text-[30px]">{greenPercent}%</p>
+            <p className="text-[30px]">
+              {collectedVotes.length === 0 ? "0" : greenPercent.toFixed(1)}%
+            </p>
           )}
         </div>
         <div className="bg-[#533968] py-[6px] px-[15px] absolute rounded-[100%]">

@@ -9,7 +9,7 @@ export function UseApi() {
 
   async function getApi() {
     try {
-      const response = await axios.get("http://localhost:3000");
+      const response = await axios.get("http://localhost:3000/");
       setVotes(response.data);
       setIpAddress(response.data);
     } catch (error) {
