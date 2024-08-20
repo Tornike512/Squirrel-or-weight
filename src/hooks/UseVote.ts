@@ -1,9 +1,13 @@
 import axios from "axios";
+import { TIpAddress } from "src/types/Enums";
 
-export const submitVote = async (color: "green" | "red" | "") => {
+export const submitVote = async (color: "green" | "red", ipAddress: any) => {
   try {
-    const response = await axios.post("http://localhost:3000/vote", { color });
-    if (response.status !== 201) {
+    const response = await axios.post("http://localhost:3000/vote", {
+      color,
+      ipAddress,
+    });
+    if (response.status !== 200) {
       throw new Error("Failed to submit vote");
     }
   } catch (error) {

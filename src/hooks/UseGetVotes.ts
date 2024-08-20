@@ -1,22 +1,23 @@
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 
-export function UseGetVotes() {
-  const [votes, setVotes] = useState<string[]>([]);
+import { TColorVote } from "src/types/Enums";
 
-  async function getVotes() {
+export function UseGetVotes() {
+  const [collectedVotes, setCollectedVotes] = useState<TColorVote[]>([]);
+
+  async function getCollectedVotes() {
     try {
       const response = await axios.get("http://localhost:3000/vote");
-      setVotes(response.data);
+      setCollectedVotes(response.data);
     } catch (error) {
       console.log("Error Loading Api");
     }
   }
 
   useEffect(() => {
-    getVotes();
+    getCollectedVotes();
   }, []);
 
-  return { votes };
+  return { collectedVotes };
 }

@@ -7,7 +7,7 @@ export function UseSendApi() {
 
   async function postApi() {
     try {
-      const response = await axios.post("https://sq-nine.vercel.app/");
+      const response = await axios.post("http://localhost:3000/", api);
       setApi(JSON.stringify(response.data));
     } catch (error) {
       console.log("Error Loading Api");
