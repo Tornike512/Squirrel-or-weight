@@ -1,5 +1,4 @@
 import axios from "axios";
-import { TIpAddress } from "src/types/Enums";
 
 export const submitVote = async (color: "green" | "red", ipAddress: any) => {
   try {
