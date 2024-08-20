@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { UseSendApi } from "src/hooks/UseSendIp";
 import { UseApi } from "src/hooks/UseIP";
 import { submitVote } from "src/hooks/UseVote";
 import { UseGetVotes } from "src/hooks/UseGetVotes";
+import { GlobalContext } from "src/GlobalContext";
+import usaFlag from "src/assets/usa-flag.webp";
+import georgianFlag from "src/assets/georgian-flag.jpg";
 
 export function WouldYouRather() {
   UseSendApi();
@@ -12,6 +15,8 @@ export function WouldYouRather() {
   const { collectedVotes } = UseGetVotes();
 
   const { ipAddress } = UseApi();
+
+  const { loading } = useContext(GlobalContext);
 
   const greens = collectedVotes.filter((green) => {
     return green.color === "green";
@@ -33,10 +38,7 @@ export function WouldYouRather() {
   const mappedAddresses = ipAddress.map((address) => address.ipAddress);
 
   useEffect(() => {
-    if (
-      mappedAddresses.length > 0 &&
-      mappedAddresses.includes(lastIp.toString())
-    ) {
+    if (!mappedAddresses.includes(lastIp.toString())) {
       setShowVotes(true);
     }
   }, [lastIp]);
@@ -47,6 +49,22 @@ export function WouldYouRather() {
         <h1 className="text-[48px] text-[#ffffff]  flex justify-center items-center mb-[20px]">
           Would you rather
         </h1>
+        <div className="absolute top-0 right-0">
+          <figure className="bg-[#ffffff] w-fit h-fit rounded-[5px] p-[5px]">
+            <img
+              className="w-[auto] h-[30px] cursor-pointer mb-[10px] "
+              src={georgianFlag}
+              alt="Georgian Flag"
+              style={{ borderLeft: "7px solid #DF09F8" }}
+            />
+            <img
+              className="w-[auto] h-[30px] cursor-pointer"
+              src={usaFlag}
+              alt="Usa Flag"
+              style={{ borderLeft: "7px solid #DF09F8" }}
+            />
+          </figure>
+        </div>
         <ul className="flex absolute text-[32px] text-[#ffffff] left-0 top-0 ">
           Vote: <li className="font-bold"> {collectedVotes.length}</li>
         </ul>

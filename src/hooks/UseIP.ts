@@ -1,19 +1,23 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "src/GlobalContext";
 import { TColorVote, TIpAddress } from "src/types/Enums";
 
 export function UseApi() {
   const [votes, setVotes] = useState<TColorVote[]>([]);
   const [ipAddress, setIpAddress] = useState<TIpAddress[]>([]);
 
+  const { setLoading } = useContext(GlobalContext);
+
   async function getApi() {
     try {
+      setLoading(true);
       const response = await axios.get("http://localhost:3000/");
       setVotes(response.data);
       setIpAddress(response.data);
     } catch (error) {
       console.log("Error Loading Api");
+      setLoading(false);
     }
   }
 
