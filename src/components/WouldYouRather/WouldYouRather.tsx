@@ -1,9 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { UseSendApi } from "src/hooks/UseSendIp";
 import { UseApi } from "src/hooks/UseIP";
 import { submitVote } from "src/hooks/UseVote";
 import { UseGetVotes } from "src/hooks/UseGetVotes";
-import { GlobalContext } from "src/GlobalContext";
 import usaFlag from "src/assets/usa-flag.webp";
 import georgianFlag from "src/assets/georgian-flag.jpg";
 
@@ -11,12 +10,12 @@ export function WouldYouRather() {
   UseSendApi();
 
   const [showVotes, setShowVotes] = useState<boolean>(false);
+  const [showGeorgia, setShowGeorgia] = useState<boolean>(true);
+  const [showEngland, setShowEngland] = useState<boolean>(false);
 
   const { collectedVotes } = UseGetVotes();
 
   const { ipAddress } = UseApi();
-
-  const { loading } = useContext(GlobalContext);
 
   const greens = collectedVotes.filter((green) => {
     return green.color === "green";
@@ -50,23 +49,39 @@ export function WouldYouRather() {
           Would you rather
         </h1>
         <div className="absolute top-0 right-0">
-          <figure className="bg-[#ffffff] w-fit h-fit rounded-[5px] p-[5px]">
-            <img
-              className="w-[auto] h-[30px] cursor-pointer mb-[10px] "
-              src={georgianFlag}
-              alt="Georgian Flag"
-              style={{ borderLeft: "7px solid #DF09F8" }}
-            />
-            <img
-              className="w-[auto] h-[30px] cursor-pointer"
-              src={usaFlag}
-              alt="Usa Flag"
-              style={{ borderLeft: "7px solid #DF09F8" }}
-            />
+          <figure>
+            {showGeorgia && (
+              <img
+                onClick={() => {
+                  if (showGeorgia && !showEngland) {
+                    setShowEngland(true);
+                  } else if (showGeorgia && showEngland) {
+                    setShowEngland(false);
+                  }
+                }}
+                className="w-[75%] h-[30px] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878] mb-[7px]"
+                src={georgianFlag}
+                alt="Georgian Flag"
+              />
+            )}
+            {showEngland && (
+              <img
+                onClick={() => {
+                  if (showEngland && !showGeorgia) {
+                    setShowGeorgia(true);
+                  } else if (showGeorgia && showEngland) {
+                    setShowGeorgia(false);
+                  }
+                }}
+                className="w-[75%] h-[30px] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878]"
+                src={usaFlag}
+                alt="Usa Flag"
+              />
+            )}
           </figure>
         </div>
         <ul className="flex absolute text-[32px] text-[#ffffff] left-0 top-0 ">
-          Vote: <li className="font-bold"> {collectedVotes.length}</li>
+          Votes: <li className="font-bold"> {collectedVotes.length}</li>
         </ul>
       </div>
       <div className="w-full text-[#ffffff] flex justify-center items-center relative">
