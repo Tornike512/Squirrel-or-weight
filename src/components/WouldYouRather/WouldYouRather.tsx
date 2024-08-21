@@ -13,14 +13,44 @@ export function WouldYouRather() {
 
   const { t } = useTranslation();
 
+  const [hasVoted, setHasVoted] = useState<boolean>(false);
   const [showVotes, setShowVotes] = useState<boolean>(false);
   const [showGeorgia, setShowGeorgia] = useState<boolean>(true);
   const [showEngland, setShowEngland] = useState<boolean>(false);
-  const [addOne, setAddOne] = useState<number>(0);
 
   const { collectedVotes } = UseGetVotes();
 
   const { ipAddress } = UseApi();
+
+  const lastIp =
+    ipAddress.length > 0
+      ? ipAddress[ipAddress.length - 1]
+      : { ipAddress: "N/A" };
+
+  console.log(ipAddress);
+
+  const mappedAddresses = ipAddress.map((address) => address.ipAddress);
+  const removeDuplicates = (err: any) => [...new Set(err)];
+
+  const hasIp = () => {
+    if (
+      removeDuplicates(mappedAddresses)
+        .toString()
+        .includes(lastIp.ipAddress.toString())
+    ) {
+      setShowVotes(true);
+      setHasVoted(true);
+    } else {
+      setShowVotes(false);
+      setHasVoted(false);
+    }
+  };
+
+  useEffect(() => {
+    if (ipAddress.length !== 0) {
+      hasIp();
+    }
+  }, [ipAddress]);
 
   const greens = collectedVotes.filter((green) => {
     return green.color === "green";
@@ -33,19 +63,6 @@ export function WouldYouRather() {
   const sum = greens.length + reds.length;
   const greenPercent = (greens.length * 100) / sum;
   const redPercent = (reds.length * 100) / sum;
-
-  const lastIp =
-    ipAddress.length > 0
-      ? ipAddress[ipAddress.length - 1]
-      : { ipAddress: "N/A" };
-
-  const mappedAddresses = ipAddress.map((address) => address.ipAddress);
-
-  useEffect(() => {
-    if (!mappedAddresses.includes(lastIp.toString())) {
-      setShowVotes(true);
-    }
-  }, [lastIp]);
 
   useEffect(() => {
     setShowGeorgia(true);
@@ -96,17 +113,23 @@ export function WouldYouRather() {
             )}
           </figure>
         </div>
-        <ul className="flex absolute text-[24px] text-[#ffffff] left-0 top-0 sm:text-[18px]">
+        <ul className="flex list-none absolute text-[24px] text-[#ffffff] left-0 top-0 sm:text-[18px]">
           {t("votes")}:{" "}
-          <li className="font-bold"> {collectedVotes.length + addOne}</li>
+          <li className="font-bold">
+            {" "}
+            {removeDuplicates(mappedAddresses).length}
+          </li>
         </ul>
       </div>
       <div className="w-full text-[#ffffff] flex justify-center items-center relative lg:flex-col">
-        <ul
+        <button
+          disabled={hasVoted}
           onClick={() => {
-            setAddOne(1);
             setShowVotes(true);
-            if (mappedAddresses.includes(lastIp.toString())) {
+            setHasVoted(true);
+            if (
+              !mappedAddresses.toString().includes(lastIp.ipAddress.toString())
+            ) {
               submitVote("red", ipAddress);
             }
           }}
@@ -115,16 +138,19 @@ export function WouldYouRather() {
           {!showVotes ? (
             t("control two squirrels")
           ) : (
-            <li>
+            <li className="list-none text-[50px]">
               {collectedVotes.length === 0 ? "0" : redPercent.toFixed(1)}%
             </li>
           )}
-        </ul>
-        <div
+        </button>
+        <button
+          disabled={hasVoted}
           onClick={() => {
-            setAddOne(1);
             setShowVotes(true);
-            if (mappedAddresses.includes(lastIp.toString())) {
+            setHasVoted(true);
+            if (
+              !mappedAddresses.toString().includes(lastIp.ipAddress.toString())
+            ) {
               submitVote("green", ipAddress);
             }
           }}
@@ -133,13 +159,13 @@ export function WouldYouRather() {
           {!showVotes ? (
             t("know the mass of everything you look at")
           ) : (
-            <p className="text-[30px]">
+            <p className="text-[50px]">
               {collectedVotes.length === 0 ? "0" : greenPercent.toFixed(1)}%
             </p>
           )}
-        </div>
+        </button>
         <div className="bg-[#533968] py-[6px] px-[15px] absolute rounded-[100%]">
-          <h2 className="text-[32px]">OR</h2>
+          <h2 className="text-[32px]">{t("or")}</h2>
         </div>
       </div>
     </div>

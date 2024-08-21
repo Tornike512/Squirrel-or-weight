@@ -3,7 +3,7 @@ import axios from "axios";
 export const submitVote = async (color: "green" | "red", ipAddress: any) => {
   try {
     const response = await axios.post(
-      "https://backend-nu-lake-36.vercel.app//vote",
+      "https://backend-nu-lake-36.vercel.app/vote",
       {
         color,
         ipAddress,
