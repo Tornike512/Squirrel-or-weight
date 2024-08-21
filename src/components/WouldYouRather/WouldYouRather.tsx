@@ -16,6 +16,7 @@ export function WouldYouRather() {
   const [showVotes, setShowVotes] = useState<boolean>(false);
   const [showGeorgia, setShowGeorgia] = useState<boolean>(true);
   const [showEngland, setShowEngland] = useState<boolean>(false);
+  const [addOne, setAddOne] = useState<number>(0);
 
   const { collectedVotes } = UseGetVotes();
 
@@ -58,7 +59,7 @@ export function WouldYouRather() {
   return (
     <div className="pt-[5%] px-[10%]">
       <div className="relative">
-        <h1 className="text-[48px] text-[#ffffff]  flex justify-center items-center mb-[20px]">
+        <h1 className="text-[32px] text-[#ffffff]  flex justify-center items-center mb-[20px] lg:pt-[50px]">
           {t("would you rather")}
         </h1>
         <div className="absolute top-0 right-0">
@@ -95,19 +96,21 @@ export function WouldYouRather() {
             )}
           </figure>
         </div>
-        <ul className="flex absolute text-[32px] text-[#ffffff] left-0 top-0 ">
-          {t("votes")}: <li className="font-bold"> {collectedVotes.length}</li>
+        <ul className="flex absolute text-[24px] text-[#ffffff] left-0 top-0 ">
+          {t("votes")}:{" "}
+          <li className="font-bold"> {collectedVotes.length + addOne}</li>
         </ul>
       </div>
-      <div className="w-full text-[#ffffff] flex justify-center items-center relative">
+      <div className="w-full text-[#ffffff] flex justify-center items-center relative lg:flex-col">
         <ul
           onClick={() => {
+            setAddOne(1);
             setShowVotes(true);
             if (mappedAddresses.includes(lastIp.toString())) {
               submitVote("red", ipAddress);
             }
           }}
-          className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707]"
+          className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707] lg:w-full md:h-[250px]"
         >
           {!showVotes ? (
             t("control two squirrels")
@@ -119,12 +122,13 @@ export function WouldYouRather() {
         </ul>
         <div
           onClick={() => {
+            setAddOne(1);
             setShowVotes(true);
             if (mappedAddresses.includes(lastIp.toString())) {
               submitVote("green", ipAddress);
             }
           }}
-          className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C]"
+          className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C] lg:w-full md:h-[250px]"
         >
           {!showVotes ? (
             t("know the mass of everything you look at")
