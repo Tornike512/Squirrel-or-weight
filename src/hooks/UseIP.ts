@@ -12,7 +12,9 @@ export function UseApi() {
   async function getApi() {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:3000/");
+      const response = await axios.get(
+        "https://backend-nu-lake-36.vercel.app/"
+      );
       setVotes(response.data);
       setIpAddress(response.data);
     } catch (error) {

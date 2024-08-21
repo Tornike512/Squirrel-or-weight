@@ -8,7 +8,9 @@ export function UseGetVotes() {
 
   async function getCollectedVotes() {
     try {
-      const response = await axios.get("http://localhost:3000/vote");
+      const response = await axios.get(
+        "https://backend-nu-lake-36.vercel.app/vote"
+      );
       setCollectedVotes(response.data);
     } catch (error) {
       console.log("Error Loading Api");
