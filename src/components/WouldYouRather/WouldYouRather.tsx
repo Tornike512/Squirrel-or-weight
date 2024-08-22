@@ -4,6 +4,7 @@ import { UseApi } from "src/hooks/UseIP";
 import { submitVote } from "src/hooks/UseVote";
 import { UseGetVotes } from "src/hooks/UseGetVotes";
 import { useTranslation } from "react-i18next";
+import { Loading } from "../Loading";
 import usaFlag from "src/assets/usa-flag.webp";
 import georgianFlag from "src/assets/georgian-flag.jpg";
 import i18n from "src/Features/i18n";
@@ -26,8 +27,6 @@ export function WouldYouRather() {
     ipAddress.length > 0
       ? ipAddress[ipAddress.length - 1]
       : { ipAddress: "N/A" };
-
-  console.log(ipAddress);
 
   const mappedAddresses = ipAddress.map((address) => address.ipAddress);
   const removeDuplicates = (err: any) => [...new Set(err)];
@@ -68,6 +67,8 @@ export function WouldYouRather() {
     setShowGeorgia(true);
     i18n.changeLanguage("ge");
   }, []);
+
+  console.log(lastIp.ipAddress, "lastip");
 
   const change = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -117,7 +118,11 @@ export function WouldYouRather() {
           {t("votes")}:{" "}
           <li className="font-bold">
             {" "}
-            {removeDuplicates(mappedAddresses).length}
+            {lastIp.ipAddress === "N/A" ? (
+              <Loading width="15px" height="15px" />
+            ) : (
+              removeDuplicates(mappedAddresses).length
+            )}
           </li>
         </ul>
       </div>
@@ -135,7 +140,9 @@ export function WouldYouRather() {
           }}
           className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707] lg:w-full md:h-[250px] lg:rounded-tl-[10px] lg:rounded-tr-[10px] lg:rounded-bl-[0px]"
         >
-          {!showVotes ? (
+          {lastIp.ipAddress === "N/A" ? (
+            <Loading width="60px" height="60px" />
+          ) : !showVotes ? (
             t("control two squirrels")
           ) : (
             <li className="list-none text-[50px]">
@@ -156,7 +163,9 @@ export function WouldYouRather() {
           }}
           className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C] lg:w-full md:h-[250px] lg:rounded-bl-[10px] lg:rounded-tr-[0px]"
         >
-          {!showVotes ? (
+          {lastIp.ipAddress === "N/A" ? (
+            <Loading width="60px" height="60px" />
+          ) : !showVotes ? (
             t("know the mass of everything you look at")
           ) : (
             <p className="text-[50px]">
