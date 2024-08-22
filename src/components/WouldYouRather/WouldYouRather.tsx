@@ -80,7 +80,7 @@ export function WouldYouRather() {
           {t("would you rather")}
         </h1>
         <div className="absolute top-0 right-0">
-          <figure>
+          <figure className="max-w-[60px]">
             {showGeorgia && (
               <img
                 onClick={() => {
@@ -91,7 +91,7 @@ export function WouldYouRather() {
                     setShowEngland(false);
                   }
                 }}
-                className="w-[75%] h-[30px] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878] mb-[7px] sm:w-[70%] sm:h-[24px]"
+                className="w-[75%] h-[30px] min-h-[8] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878] sm:w-[70%] sm:h-[24px]"
                 src={georgianFlag}
                 alt="Georgian Flag"
               />
@@ -106,7 +106,7 @@ export function WouldYouRather() {
                     setShowGeorgia(false);
                   }
                 }}
-                className="w-[75%] h-[30px] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878] sm:w-[70%] sm:h-[24px]"
+                className="w-[75%] h-[30px] min-h-[8] cursor-pointer border border-solid border-[#000000] shadow-[3px_4px_7px_#8d7878] sm:w-[70%] sm:h-[24px]"
                 src={usaFlag}
                 alt="Usa Flag"
               />
