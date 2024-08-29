@@ -13,7 +13,7 @@ export function UseApi() {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://backend-nu-lake-36.vercel.app/"
+        "https://squirrel-weight-backend.vercel.app/"
       );
       setVotes(response.data);
       setIpAddress(response.data);

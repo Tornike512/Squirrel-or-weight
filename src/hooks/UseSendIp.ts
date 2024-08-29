@@ -10,7 +10,7 @@ export function UseSendApi() {
   async function postApi() {
     try {
       const response = await axios.post(
-        "https://backend-nu-lake-36.vercel.app/",
+        "https://squirrel-weight-backend.vercel.app/",
         api
       );
       setApi(JSON.stringify(response.data));

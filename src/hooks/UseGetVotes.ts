@@ -9,7 +9,7 @@ export function UseGetVotes() {
   async function getCollectedVotes() {
     try {
       const response = await axios.get(
-        "https://backend-nu-lake-36.vercel.app/vote"
+        "https://squirrel-weight-backend.vercel.app/vote"
       );
       setCollectedVotes(response.data);
     } catch (error) {

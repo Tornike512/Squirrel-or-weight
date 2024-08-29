@@ -5,6 +5,7 @@ import { submitVote } from "src/hooks/UseVote";
 import { UseGetVotes } from "src/hooks/UseGetVotes";
 import { useTranslation } from "react-i18next";
 import { Loading } from "../Loading";
+import VoteDisplay from "./VoteDisplay";
 import usaFlag from "src/assets/usa-flag.webp";
 import georgianFlag from "src/assets/georgian-flag.jpg";
 import i18n from "src/Features/i18n";
@@ -18,6 +19,7 @@ export function WouldYouRather() {
   const [showVotes, setShowVotes] = useState<boolean>(false);
   const [showGeorgia, setShowGeorgia] = useState<boolean>(true);
   const [showEngland, setShowEngland] = useState<boolean>(false);
+  const [changeLastIp, setChangeLastIp] = useState<boolean>(false);
 
   const { collectedVotes } = UseGetVotes();
 
@@ -28,6 +30,9 @@ export function WouldYouRather() {
       ? ipAddress[ipAddress.length - 1]
       : { ipAddress: "N/A" };
 
+  useEffect(() => {
+    setChangeLastIp(true);
+  }, [lastIp]);
   const mappedAddresses = ipAddress.map((address) => address.ipAddress);
   const removeDuplicates = (err: any) => [...new Set(err)];
 
@@ -77,7 +82,7 @@ export function WouldYouRather() {
   return (
     <div className="pt-[5%] px-[10%]">
       <div className="relative">
-        <h1 className="text-[32px] text-[#ffffff]  flex justify-center items-center mb-[20px] lg:pt-[50px] md:text-center md:text-2xl">
+        <h1 className="text-[32px] text-[#ffffff] flex justify-center items-center mb-[20px] lg:pt-[50px] md:text-center md:text-2xl">
           {t("would you rather")}
         </h1>
         <div className="absolute top-0 right-0">
@@ -140,15 +145,13 @@ export function WouldYouRather() {
           }}
           className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707] lg:w-full md:h-[250px] lg:rounded-tl-[10px] lg:rounded-tr-[10px] lg:rounded-bl-[0px]"
         >
-          {lastIp.ipAddress === "N/A" ? (
-            <Loading width="60px" height="60px" />
-          ) : !showVotes ? (
-            t("control two squirrels")
-          ) : (
-            <li className="list-none text-[50px]">
-              {collectedVotes.length === 0 ? "0" : redPercent.toFixed(1)}%
-            </li>
-          )}
+          <VoteDisplay
+            changeLastIp={changeLastIp}
+            showVotes={showVotes}
+            t={t}
+            collectedVotes={collectedVotes}
+            redPercent={redPercent}
+          />
         </button>
         <button
           disabled={hasVoted}
