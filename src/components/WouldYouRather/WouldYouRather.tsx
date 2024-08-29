@@ -6,6 +6,7 @@ import { UseGetVotes } from "src/hooks/UseGetVotes";
 import { useTranslation } from "react-i18next";
 import { Loading } from "../Loading";
 import VoteDisplay from "./VoteDisplay";
+import VoteGreenDisplay from "./VoteGreenDisplay";
 import usaFlag from "src/assets/usa-flag.webp";
 import georgianFlag from "src/assets/georgian-flag.jpg";
 import i18n from "src/Features/i18n";
@@ -123,7 +124,7 @@ export function WouldYouRather() {
           {t("votes")}:{" "}
           <li className="font-bold">
             {" "}
-            {lastIp.ipAddress === "N/A" ? (
+            {!changeLastIp ? (
               <Loading width="15px" height="15px" />
             ) : (
               removeDuplicates(mappedAddresses).length
@@ -166,15 +167,13 @@ export function WouldYouRather() {
           }}
           className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C] lg:w-full md:h-[250px] lg:rounded-bl-[10px] lg:rounded-tr-[0px]"
         >
-          {lastIp.ipAddress === "N/A" ? (
-            <Loading width="60px" height="60px" />
-          ) : !showVotes ? (
-            t("know the mass of everything you look at")
-          ) : (
-            <p className="text-[50px]">
-              {collectedVotes.length === 0 ? "0" : greenPercent.toFixed(1)}%
-            </p>
-          )}
+          <VoteGreenDisplay
+            changeLastIp={changeLastIp}
+            showVotes={showVotes}
+            t={t}
+            collectedVotes={collectedVotes}
+            greenPercent={greenPercent}
+          />
         </button>
         <div className="bg-[#533968] py-[6px] px-[15px] absolute rounded-[100%]">
           <h2 className="text-[32px]">{t("or")}</h2>
