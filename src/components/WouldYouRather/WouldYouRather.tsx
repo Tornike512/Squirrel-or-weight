@@ -69,6 +69,8 @@ export function WouldYouRather() {
   const greenPercent = (greens.length * 100) / sum;
   const redPercent = (reds.length * 100) / sum;
 
+  console.log(collectedVotes, "collected");
+
   useEffect(() => {
     setShowGeorgia(true);
     i18n.changeLanguage("ge");
@@ -79,6 +81,8 @@ export function WouldYouRather() {
   const change = (lang: string) => {
     i18n.changeLanguage(lang);
   };
+
+  console.log(ipAddress);
 
   return (
     <div className="pt-[5%] px-[10%]">
@@ -147,7 +151,8 @@ export function WouldYouRather() {
           className="bg-[#E30B0B] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-bl-[10px] rounded-tl-[10px] cursor-pointer hover:bg-[#FF0707] lg:w-full md:h-[250px] lg:rounded-tl-[10px] lg:rounded-tr-[10px] lg:rounded-bl-[0px]"
         >
           <VoteDisplay
-            changeLastIp={changeLastIp}
+            votesQuantity={removeDuplicates(mappedAddresses).length}
+            changeLastIp={lastIp}
             showVotes={showVotes}
             t={t}
             collectedVotes={collectedVotes}
@@ -168,7 +173,8 @@ export function WouldYouRather() {
           className="bg-[#0CD949] border-[10px] border-solid border-[#533968] h-[300px] w-[400px] flex justify-center items-center text-[28px] p-[40px] text-[#ffffff] text-center rounded-br-[10px] rounded-tr-[10px] cursor-pointer hover:bg-[#00FF4C] lg:w-full md:h-[250px] lg:rounded-bl-[10px] lg:rounded-tr-[0px]"
         >
           <VoteGreenDisplay
-            changeLastIp={changeLastIp}
+            votesQuantity={removeDuplicates(mappedAddresses).length}
+            changeLastIp={lastIp}
             showVotes={showVotes}
             t={t}
             collectedVotes={collectedVotes}

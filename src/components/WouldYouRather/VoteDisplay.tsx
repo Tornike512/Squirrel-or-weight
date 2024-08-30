@@ -1,7 +1,8 @@
 import { Loading } from "../Loading";
 
 interface VoteDisplayProps {
-  changeLastIp: Boolean;
+  votesQuantity: number;
+  changeLastIp: { ipAddress: string };
   showVotes: boolean;
   t: (key: string) => string;
   collectedVotes: any[];
@@ -9,13 +10,14 @@ interface VoteDisplayProps {
 }
 
 const VoteDisplay: React.FC<VoteDisplayProps> = ({
+  votesQuantity,
   changeLastIp,
   showVotes,
   t,
   collectedVotes,
   redPercent,
 }) => {
-  if (!changeLastIp) {
+  if (changeLastIp.ipAddress === "N/A" && votesQuantity !== 0) {
     return <Loading width="60px" height="60px" />;
   } else {
     if (!showVotes) {
